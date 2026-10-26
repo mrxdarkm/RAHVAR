@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>شهرپلاک | شهر پلاک خودرو ایران</title>
+    <meta
+      name="description"
+      content="پلاک ملی را وارد کنید تا شهر و استان ثبت آن از روی کد ایران مشخص شود و متن پیامک آماده شود."
+    />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="top">
+      <a class="brand" href="#studio">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>شهرپلاک</span>
+      </a>
+      <nav>
+        <a href="#studio">خواندن پلاک</a>
+        <a href="#inbox">پیامک</a>
+        <a href="#directory">جدول کدها</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" id="studio">
+        <div class="hero-copy">
+          <p class="eyebrow">پلاک ملی خودرو</p>
+          <h1>پلاک را بنویس، شهرش را بگو.</h1>
+          <p class="lede">
+            دو رقم سمت راست، کد ایران است. با حرف وسط، برای خیلی از استان‌ها شهرستان هم جدا می‌شود.
+            متن پیامک فقط همین شهر را می‌گوید.
+          </p>
+          <ol class="steps">
+            <li>پلاک را در قاب بنویس</li>
+            <li>شهر یا شهرستان را ببین</li>
+            <li>متن را برای موبایل کاربر کپی کن</li>
+          </ol>
+        </div>
+
+        <div class="stage">
+          <div class="vehicle-switch" role="tablist" aria-label="نوع وسیله">
+            <button type="button" id="tabCar" role="tab" aria-selected="true">خودرو</button>
+            <button type="button" id="tabMoto" role="tab" aria-selected="false">موتور</button>
+          </div>
+
+          <form id="plateForm" autocomplete="off">
+            <div class="plate plate--white" id="plate" dir="ltr">
+              <div class="plate-flag" aria-hidden="true">
+                <span class="flag"><i></i><i></i><i></i></span>
+                <span>I.R.</span>
+                <span>IRAN</span>
+              </div>
+              <label class="plate-cell">
+                <span class="sr" id="leftLabel">دو رقم چپ</span>
+                <input id="left" inputmode="numeric" maxlength="2" aria-labelledby="leftLabel" placeholder="۱۲" />
+              </label>
+              <label class="plate-cell plate-letter">
+                <span class="sr">حرف پلاک</span>
+                <span id="letterFace">ب</span>
+                <small id="letterTag"></small>
+                <select id="letter" aria-label="حرف پلاک"></select>
+              </label>
+              <label class="plate-cell">
+                <span class="sr" id="midLabel">سه رقم وسط</span>
+                <input id="mid" inputmode="numeric" maxlength="3" aria-labelledby="midLabel" placeholder="۳۴۵" />
+              </label>
+              <label class="plate-region">
+                <span>ایران</span>
+                <input id="region" inputmode="numeric" maxlength="2" aria-label="کد ایران" placeholder="۱۱" />
+              </label>
+            </div>
+
+            <div class="moto" id="motoFields" hidden>
+              <label>
+                کد سه رقمی
+                <input id="motoCode" inputmode="numeric" maxlength="3" placeholder="۱۱۱" />
+              </label>
+              <label>
+                شماره پنج رقمی
+                <input id="motoSerial" inputmode="numeric" maxlength="5" placeholder="۱۲۳۴۵" />
+              </label>
+            </div>
+
+            <div class="samples" id="samples"></div>
+            <p class="form-error" id="formError" hidden></p>
+          </form>
+        </div>
+      </section>
+
+      <section class="result-wrap" id="result" aria-live="polite" hidden>
+        <div class="result-card">
+          <p class="eyebrow" id="resultKicker">شهر پلاک</p>
+          <h2 id="cityName"></h2>
+          <p class="meta" id="resultMeta"></p>
+          <p class="nearby" id="nearby" hidden></p>
+          <p class="note" id="resultNote" hidden></p>
+          <div class="bubble">
+            <span>متن پیامک</span>
+            <p id="smsText"></p>
+          </div>
+          <div class="actions">
+            <button type="button" class="primary" id="copySms">کپی متن پیامک</button>
+            <button type="button" class="ghost" id="scrollInbox">شماره را به فهرست اضافه کن</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="inbox" id="inbox">
+        <div class="section-head">
+          <h2>فهرست پیامک</h2>
+          <p>
+            شماره و متن فقط روی همین مرورگر می‌ماند. شهرپلاک به پلیس راهور وصل نیست و
+            توقیف خودرو را اعلام نمی‌کند.
+          </p>
+        </div>
+        <form id="watchForm" class="watch-form">
+          <label>
+            موبایل
+            <input id="phone" inputmode="tel" placeholder="۰۹۱۲۱۲۳۴۵۶۷" autocomplete="tel" />
+          </label>
+          <button type="submit" class="primary" id="saveWatch" disabled>افزودن به فهرست</button>
+        </form>
+        <p class="form-error" id="phoneError" hidden></p>
+        <div class="watch-list" id="watchList"></div>
+      </section>
+
+      <section class="directory" id="directory">
+        <div class="section-head">
+          <h2>جدول کدها</h2>
+          <label class="search">
+            <span class="sr">جستجوی شهر یا کد</span>
+            <input id="filter" placeholder="شهر، استان یا کد، مثل ۶۸ یا کرج" />
+          </label>
+        </div>
+        <div id="catalog"></div>
+      </section>
+    </main>
+
+    <footer>
+      <p>شهرپلاک وابسته به پلیس راهور نیست. تشخیص شهر از جدول عمومی کد پلاک ملی است، نه استعلام توقیف.</p>
+    </footer>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
